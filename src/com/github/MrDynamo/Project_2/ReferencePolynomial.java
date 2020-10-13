@@ -4,61 +4,71 @@ public class ReferencePolynomial implements Polynomial {
 
     /** Class Variables **/
 
-    private Node dummy = new Node(null, null, null);
-    private Node head;
+    private Node head, curr, temp;
     private int size = 0;
 
     /** Class Functions **/
 
     // Default constructor
     public ReferencePolynomial() {
-        dummy.next = head;
+        head = new Node(null, null, null);
     }
 
     @Override
     public int degree() {
         // Return first node, should be highest degree
-        if (head != null) {
+        if (head != null && head.power != null)
             return head.power;
-        }
 
         // Else return 0 power
         return 0;
     }
 
+    // Should be updated?
     @Override
     public double getCoefficient(int power) throws ExponentOutOfRangeException {
-        if (head != null) {
-            do {
-                if (head.power == power)
-                    return head.coefficient;
-                else {
-                    try {
-                        head = head.next;
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } while (head != null);
+        curr = head;
+        while (curr.next != null) {
+            curr = curr.next;
+            if (curr.power == power)
+                return curr.coefficient;
         }
 
-        resetHead();
         return 0.0;
     }
 
     @Override
     public void setCoefficient(double newCoefficient, int power) throws ExponentOutOfRangeException {
+        curr = head;
+
         if (power > 100)
             throw new ExponentOutOfRangeException("Maximum power cannot exceed 100");
 
         // If empty LL, create new node after dummy head
-        if (head == null) {
-            head = new Node(newCoefficient, power, null);
-            dummy.next = head;
-            size++;
+        if (head.next == null) {
+            curr = new Node(newCoefficient, power, null);
+            head.next = curr;
         }
         // Else traverse LL and add/modify node, then resetHead - FIX
         else {
+            while (curr != null) {
+                // If newPower > next node power, add new node before
+                if (power > curr.power) {
+                    temp = new Node(newCoefficient, power, null);
+                } // If node with power exists, modify coefficient
+                else if (power == curr.power) {
+                    curr.coefficient = newCoefficient;
+                }
+                else if (power < curr.power) {
+                    temp = new Node(newCoefficient, power, null);
+                    curr.next = temp;
+                }
+                else
+                    // Finish implementation
+                    curr = curr.next;
+            }
+
+            /*
             do {
                 // If newPower > next node power, add new node before
                 if (power > head.power) {
@@ -76,8 +86,8 @@ public class ReferencePolynomial implements Polynomial {
                     head = head.next;
 
             } while (head != null);
+             */
         }
-        resetHead();
     }
 
     @Override
@@ -102,24 +112,28 @@ public class ReferencePolynomial implements Polynomial {
 
     @Override
     public void displayPolynomial() {
-        // Declare and initialize display strings
+        // Declare and initialize display strings and variables
         String display = "", tmp = "";
+        curr = head;
 
         // Implement display -- Traverse LL and add each coefficient & power to display
-        while (head != null) {
+        while (curr != null) {
             // If nothing has been added to display yet, don't add the + to the end of display
             if (display.isBlank()) {
-                if (head.power == 0)
-                    display = Double.toString(head.coefficient);
+                if (curr.power == null) {
+
+                }
+                else if (curr.power == 0)
+                    display = " " + curr.coefficient;
                 else
-                    display = head.coefficient + "x^" + head.power;
+                    display = curr.coefficient + "x^" + curr.power;
             } else {
-                tmp = head.coefficient + "x^" + head.power + " + ";
+                tmp = curr.coefficient + "x^" + curr.power + " + ";
                 display = tmp + display;
             }
             // Set head to next node in LL
             try {
-                head = head.next;
+                curr = curr.next;
             } catch (NullPointerException e) {
                 e.printStackTrace();
             }
@@ -132,12 +146,6 @@ public class ReferencePolynomial implements Polynomial {
             // Else display 0.0
         else
             System.out.println("0.0");
-
-        resetHead();
-    }
-    
-    private void resetHead() {
-        head = dummy.next;
     }
 
     private class Node {
@@ -155,9 +163,6 @@ public class ReferencePolynomial implements Polynomial {
             power = pow;
             next = nxt;
         }
-
-        //
-
     }
 
 }
