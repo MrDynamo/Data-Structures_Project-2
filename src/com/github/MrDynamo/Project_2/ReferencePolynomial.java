@@ -47,42 +47,50 @@ public class ReferencePolynomial implements Polynomial {
         if (power > 100)
             throw new ExponentOutOfRangeException("Maximum power cannot exceed 100");
 
-        // Dont add new node if coefficient is 0
-        if (newCoefficient == 0.0)
-            return;
-
         // If empty LL, create new node after dummy head
         if (curr.next == null) {
-            curr = new Node(newCoefficient, power, null);
-            head.next = curr;
+            temp = new Node(newCoefficient, power, null);
+            curr.next = temp;
             size++;
         }
         // Else traverse LL and add/modify node, then resetHead - FIX
         else {
             while (curr.next != null) {
+                Node prev = curr;
                 curr = curr.next;
-                // If newPower > next node power, add new node before
-                if (power > curr.power) {
-                    temp = new Node(newCoefficient, power, curr);
-                    curr = temp;
-                    head.next = curr;
-                    size++;
+
+                // If node with power exists
+                if (power == curr.power) {
+                    // If 0, delete node
+                    if (newCoefficient == 0) {
+                        // Delete node, update references
+                        prev.next = curr.next;
+                        size--;
+                    } // Else modify coeff
+                    else {
+                        curr.coefficient = newCoefficient;
+                    }
                     break;
-                } // If node with power exists, modify coefficient
-                else if (power == curr.power) {
-                    curr.coefficient = newCoefficient;
-                    size++;
-                    break;
-                } // If newPower < power, add node after
-                else if (power < curr.power) {
-                    temp = new Node(newCoefficient, power, curr.next);
-                    curr.next = temp;
-                    size++;
-                    break;
+                } // If newPower > current power, add before
+                else if (power > curr.power) {
+                    if (newCoefficient == 0) {
+                        // do nothing
+                    }
+                    else {
+                        temp = new Node(newCoefficient, power, curr);
+                        curr = temp;
+                        prev.next = curr;
+                        break;
+                    }
                 }
-                else
-                    // Finish implementation
-                    curr = curr.next;
+                else {
+                    // Do nothing
+                }
+            }
+            // Add to end of list
+            if (curr.next == null && newCoefficient != 0) {
+                temp = new Node(newCoefficient, power, null);
+                curr.next = temp;
             }
         }
     }
@@ -90,13 +98,24 @@ public class ReferencePolynomial implements Polynomial {
     // Implement
     @Override
     public Polynomial add(Polynomial p) {
-        return null;
+        Polynomial result = new ReferencePolynomial();
+        curr = head;
+        while (curr.next != null) {
+            curr = curr.next;
+            result.setCoefficient(curr.coefficient + p.getCoefficient(curr.power),  curr.power);
+        }
+
+        // Implement
+
+        return result;
     }
 
     // Implement
     @Override
     public Polynomial mult(Polynomial p) throws ExponentOutOfRangeException {
-        return null;
+        Polynomial result = new ReferencePolynomial();
+
+        return result;
     }
 
     // Implement
