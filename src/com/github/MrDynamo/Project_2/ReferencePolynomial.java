@@ -14,6 +14,7 @@ public class ReferencePolynomial implements Polynomial {
         head = new Node(null, null, null);
     }
 
+    // Displays degree of this polynomial
     @Override
     public int degree() {
         // Return first node, should be highest degree
@@ -24,7 +25,7 @@ public class ReferencePolynomial implements Polynomial {
         return 0;
     }
 
-    // Should be updated?
+    // Gets coefficient of this polynomial
     @Override
     public double getCoefficient(int power) throws ExponentOutOfRangeException {
         curr = head;
@@ -37,6 +38,7 @@ public class ReferencePolynomial implements Polynomial {
         return 0.0;
     }
 
+    // Sets coefficient of this polynomial
     @Override
     public void setCoefficient(double newCoefficient, int power) throws ExponentOutOfRangeException {
         curr = head;
@@ -79,26 +81,31 @@ public class ReferencePolynomial implements Polynomial {
         }
     }
 
+    // Implement
     @Override
     public Polynomial add(Polynomial p) {
         return null;
     }
 
+    // Implement
     @Override
     public Polynomial mult(Polynomial p) throws ExponentOutOfRangeException {
         return null;
     }
 
+    // Implement
     @Override
     public void mult(double scalar) {
 
     }
 
+    // Implement recursively
     @Override
     public double evaluate(double x) {
         return 0;
     }
 
+    // Displays polynomial information
     @Override
     public void displayPolynomial() {
         // Declare and initialize display strings and variables
@@ -150,6 +157,12 @@ public class ReferencePolynomial implements Polynomial {
             System.out.println("0.0");
     }
 
+    // Gets size of LinkedList
+    public int getSize() {
+        return size;
+    }
+
+    // Node class for LinkedList
     private class Node {
 
         /** Class Variables **/

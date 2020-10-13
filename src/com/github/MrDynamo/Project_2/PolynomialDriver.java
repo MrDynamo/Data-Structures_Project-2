@@ -66,8 +66,6 @@ public class PolynomialDriver {
 		System.out.print("p = ");
 		showInfo(p);
 
-		/*
-
 		// Set up polynomial q
 		System.out.println("\nChange q and display it: ");
 		Polynomial q = new ReferencePolynomial();
@@ -78,7 +76,7 @@ public class PolynomialDriver {
 		System.out.print("q = ");
 		q.displayPolynomial();
 
-		// Test case 4: Test for mult(double)	
+		// Test case 4.1: Test for mult(double)
 		System.out.println("\nTest case 4.1: mult(double)");	
 		q.mult(-3);
 		System.out.print("\nq = -3 * q = ");
@@ -88,11 +86,13 @@ public class PolynomialDriver {
 		System.out.print("\nq = 12.5 * q = ");
 		showInfo(q);
 
-		// Test case 4: Test for mult(double), result is 0 with degree 0	
+		// Test case 4.2: Test for mult(double), result is 0 with degree 0
 		System.out.println("Test case 4.2: special case for result 0; degree becomes 0");							
 		q.mult(0.0);
 		System.out.print("\nq = 0 * q = ");
 		showInfo(q);
+
+		/*
 		
 		// Test case 5.1: Test for add()			
 		// Set up polynomial p
