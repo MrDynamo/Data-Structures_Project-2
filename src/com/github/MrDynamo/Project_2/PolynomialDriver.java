@@ -92,8 +92,6 @@ public class PolynomialDriver {
 		System.out.print("\nq = 0 * q = ");
 		showInfo(q);
 
-		/*
-		
 		// Test case 5.1: Test for add()			
 		// Set up polynomial p
 		System.out.println("Test case 5.1: add()");
@@ -140,6 +138,8 @@ public class PolynomialDriver {
 		p.displayPolynomial();
 		System.out.print("  and q = ");
 		q.displayPolynomial();
+
+		/*
 	
 		// Test case 6: Test for evaluate()
 		//test for evaluate()
@@ -253,5 +253,7 @@ public class PolynomialDriver {
 		}
 
 		 */
+
+
 	} // main
 } // PolynomialDriver
