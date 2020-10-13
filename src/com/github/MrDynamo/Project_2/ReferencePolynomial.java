@@ -43,9 +43,11 @@ public class ReferencePolynomial implements Polynomial {
     public void setCoefficient(double newCoefficient, int power) throws ExponentOutOfRangeException {
         curr = head;
 
+        // Throw exception
         if (power > 100)
             throw new ExponentOutOfRangeException("Maximum power cannot exceed 100");
 
+        // Dont add new node if coefficient is 0
         if (newCoefficient == 0.0)
             return;
 
@@ -53,6 +55,7 @@ public class ReferencePolynomial implements Polynomial {
         if (curr.next == null) {
             curr = new Node(newCoefficient, power, null);
             head.next = curr;
+            size++;
         }
         // Else traverse LL and add/modify node, then resetHead - FIX
         else {
@@ -63,15 +66,18 @@ public class ReferencePolynomial implements Polynomial {
                     temp = new Node(newCoefficient, power, curr);
                     curr = temp;
                     head.next = curr;
+                    size++;
                     break;
                 } // If node with power exists, modify coefficient
                 else if (power == curr.power) {
                     curr.coefficient = newCoefficient;
+                    size++;
                     break;
-                }
+                } // If newPower < power, add node after
                 else if (power < curr.power) {
                     temp = new Node(newCoefficient, power, curr.next);
                     curr.next = temp;
+                    size++;
                     break;
                 }
                 else
