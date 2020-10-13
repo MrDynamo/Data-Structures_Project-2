@@ -17,8 +17,8 @@ public class ReferencePolynomial implements Polynomial {
     @Override
     public int degree() {
         // Return first node, should be highest degree
-        if (head != null && head.power != null)
-            return head.power;
+        if (head.next != null)
+            return head.next.power;
 
         // Else return 0 power
         return 0;
@@ -44,49 +44,38 @@ public class ReferencePolynomial implements Polynomial {
         if (power > 100)
             throw new ExponentOutOfRangeException("Maximum power cannot exceed 100");
 
+        if (newCoefficient == 0.0)
+            return;
+
         // If empty LL, create new node after dummy head
-        if (head.next == null) {
+        if (curr.next == null) {
             curr = new Node(newCoefficient, power, null);
             head.next = curr;
         }
         // Else traverse LL and add/modify node, then resetHead - FIX
         else {
-            while (curr != null) {
+            while (curr.next != null) {
+                curr = curr.next;
                 // If newPower > next node power, add new node before
                 if (power > curr.power) {
-                    temp = new Node(newCoefficient, power, null);
+                    temp = new Node(newCoefficient, power, curr);
+                    curr = temp;
+                    head.next = curr;
+                    break;
                 } // If node with power exists, modify coefficient
                 else if (power == curr.power) {
                     curr.coefficient = newCoefficient;
+                    break;
                 }
                 else if (power < curr.power) {
-                    temp = new Node(newCoefficient, power, null);
+                    temp = new Node(newCoefficient, power, curr.next);
                     curr.next = temp;
+                    break;
                 }
                 else
                     // Finish implementation
                     curr = curr.next;
             }
-
-            /*
-            do {
-                // If newPower > next node power, add new node before
-                if (power > head.power) {
-                    Node tmp = new Node(newCoefficient, power, head);
-                    head = tmp;
-                } // If node with power exists, modify coefficient
-                else if (power == head.power) {
-                        head.coefficient = newCoefficient;
-                } // Else move head to next, continue do-while loop
-                else if (power < head.power){
-                    Node tmp = new Node(newCoefficient, power, null);
-                    head.next = tmp;
-                }
-                else
-                    head = head.next;
-
-            } while (head != null);
-             */
         }
     }
 
@@ -123,13 +112,26 @@ public class ReferencePolynomial implements Polynomial {
                 if (curr.power == null) {
 
                 }
-                else if (curr.power == 0)
-                    display = " " + curr.coefficient;
-                else
-                    display = curr.coefficient + "x^" + curr.power;
+                else {
+                    if (curr.power == 0)
+                        display = "" + curr.coefficient;
+                    else
+                        if (curr.coefficient == 0.0)
+                            display = "x^" + curr.power;
+                        else
+                            display = curr.coefficient + "x^" + curr.power;
+                }
             } else {
-                tmp = curr.coefficient + "x^" + curr.power + " + ";
-                display = tmp + display;
+                if (curr.power == 0)
+                    tmp = " + " + curr.coefficient;
+                else {
+                    if (curr.coefficient == 0.0)
+                        tmp = " + x^" + curr.power;
+                    else
+                        tmp = " + " + curr.coefficient + "x^" + curr.power;
+                }
+
+                display += tmp;
             }
             // Set head to next node in LL
             try {
