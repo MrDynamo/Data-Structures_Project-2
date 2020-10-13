@@ -68,13 +68,13 @@ public class ReferencePolynomial implements Polynomial {
                 else if (power == head.power) {
                         head.coefficient = newCoefficient;
                 } // Else move head to next, continue do-while loop
-                else {
-                    try {
-                        head = head.next;
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                    }
+                else if (power < head.power){
+                    Node tmp = new Node(newCoefficient, power, null);
+                    head.next = tmp;
                 }
+                else
+                    head = head.next;
+
             } while (head != null);
         }
         resetHead();
