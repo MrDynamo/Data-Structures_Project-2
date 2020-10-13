@@ -66,6 +66,8 @@ public class PolynomialDriver {
 		System.out.print("p = ");
 		showInfo(p);
 
+		/*
+
 		// Set up polynomial q
 		System.out.println("\nChange q and display it: ");
 		Polynomial q = new ReferencePolynomial();
@@ -248,6 +250,8 @@ public class PolynomialDriver {
 		}
 		catch (ExponentOutOfRangeException e) {
 			System.out.println("\n" + e);
-		}	
+		}
+
+		 */
 	} // main
 } // PolynomialDriver
