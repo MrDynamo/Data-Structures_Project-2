@@ -6,6 +6,7 @@ package com.github.mrdynamo.Project_2;
 // By Chi-Cheng Lin
 // Date: 09/07/2020
 // ********************************************************
+
 public class PolynomialDriver {
 
 	static public void showInfo(Polynomial p) {

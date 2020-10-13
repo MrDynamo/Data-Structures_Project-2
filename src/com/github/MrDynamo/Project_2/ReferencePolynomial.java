@@ -2,6 +2,17 @@ package com.github.mrdynamo.Project_2;
 
 public class ReferencePolynomial implements Polynomial {
 
+    /** Class Variables **/
+
+    private Node head;
+
+    /** Class Functions **/
+
+    // Default constructor
+    public ReferencePolynomial() {
+        // Dummy head
+        //head = new Node();
+    }
 
     @Override
     public int degree() {
@@ -42,4 +53,21 @@ public class ReferencePolynomial implements Polynomial {
     public void displayPolynomial() {
 
     }
+
+    private class Node {
+
+        /** Class Variables **/
+        double coefficient;
+        int power;
+        Node next;
+
+        /** Class Methods **/
+
+        // Default constructor
+        public Node() {
+
+        }
+
+    }
+
 }
