@@ -114,14 +114,45 @@ public class ReferencePolynomial implements Polynomial {
     @Override
     public Polynomial mult(Polynomial p) throws ExponentOutOfRangeException {
         Polynomial result = new ReferencePolynomial();
+        curr = head;
+        while (curr.next != null) {
+            curr = curr.next;
+            // Implement
+            // Multiply, exponents are added together, coefficients are multiplied
+            // result.setCoefficient = multiplication
+        }
+
+        // Implement
 
         return result;
     }
 
-    // Implement
+    // Multiplies this polynomial by a scalar and modifies this
     @Override
     public void mult(double scalar) {
+        curr = head;
+        Node prev = curr;
+        // Loop
+        while (curr.next != null) {
+            curr = curr.next;
 
+            try {
+                if (prev.coefficient != null && prev.coefficient == 0.0)
+                    prev = curr;
+            } catch (NullPointerException e) {
+                //e.printStackTrace();
+            }
+
+            // Multiplication
+            curr.coefficient = curr.coefficient * scalar;
+            if (curr.coefficient == 0) {
+                // Delete node
+                prev.next = curr.next;
+                size--;
+            }
+            else
+                prev = curr;
+        }
     }
 
     // Implement recursively
