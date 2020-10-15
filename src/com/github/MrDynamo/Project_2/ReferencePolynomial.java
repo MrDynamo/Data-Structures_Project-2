@@ -4,14 +4,15 @@ public class ReferencePolynomial implements Polynomial {
 
     /** Class Variables **/
 
-    private Node head, curr, temp;
-    private int size = 0;
+    private Node head, curr, temp, ecurr;
+    private int size;
 
     /** Class Functions **/
 
     // Default constructor
     public ReferencePolynomial() {
         head = new Node(null, null, null);
+        ecurr = head;
     }
 
     // Displays degree of this polynomial
@@ -59,7 +60,6 @@ public class ReferencePolynomial implements Polynomial {
         if (curr.next == null) {
             temp = new Node(newCoefficient, power, null);
             curr.next = temp;
-            size++;
         }
         // Else traverse LL and add/modify node, then resetHead - FIX
         else {
@@ -73,7 +73,6 @@ public class ReferencePolynomial implements Polynomial {
                     if (newCoefficient == 0) {
                         // Delete node, update references
                         prev.next = curr.next;
-                        size--;
                     } // Else modify coeff
                     else {
                         curr.coefficient = newCoefficient;
@@ -180,7 +179,6 @@ public class ReferencePolynomial implements Polynomial {
             if (curr.coefficient == 0) {
                 // Delete node
                 prev.next = curr.next;
-                size--;
             }
             else
                 prev = curr;
@@ -188,10 +186,19 @@ public class ReferencePolynomial implements Polynomial {
 
     }
 
-    // Implement recursively
+    // Evaluates the polynomial at x recursively
     @Override
     public double evaluate(double x) {
-        return 0;
+        double result = 0.0;
+
+        if (ecurr.next != null) {
+            ecurr = ecurr.next;
+            result = ecurr.coefficient * Math.pow(x, ecurr.power);
+            return result + evaluate(x);
+        }
+        else
+            ecurr = head;
+            return result;
     }
 
     // Displays polynomial information
@@ -248,6 +255,12 @@ public class ReferencePolynomial implements Polynomial {
 
     // Gets size of LinkedList
     public int getSize() {
+        size = 0;
+        curr = head;
+        while (curr.next != null) {
+            curr = curr.next;
+            size++;
+        }
         return size;
     }
 
