@@ -95,7 +95,7 @@ public class ReferencePolynomial implements Polynomial {
         }
     }
 
-    // Implement
+    // Implement more
     @Override
     public Polynomial add(Polynomial p) {
         Polynomial result = new ReferencePolynomial();
