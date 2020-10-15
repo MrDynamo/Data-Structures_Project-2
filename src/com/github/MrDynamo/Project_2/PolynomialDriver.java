@@ -139,8 +139,6 @@ public class PolynomialDriver {
 		System.out.print("  and q = ");
 		q.displayPolynomial();
 
-		/*
-	
 		// Test case 6: Test for evaluate()
 		//test for evaluate()
 		System.out.println("\nTest case 6: evaluate()");							
@@ -251,8 +249,6 @@ public class PolynomialDriver {
 		catch (ExponentOutOfRangeException e) {
 			System.out.println("\n" + e);
 		}
-
-		 */
 
 
 	} // main
