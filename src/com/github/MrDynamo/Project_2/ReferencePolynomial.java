@@ -25,9 +25,17 @@ public class ReferencePolynomial implements Polynomial {
         return 0;
     }
 
+    // Gets power of this polynomial
+    public Node getHead() {
+        return head;
+    }
+
     // Gets coefficient of this polynomial
     @Override
     public double getCoefficient(int power) throws ExponentOutOfRangeException {
+        if (power > 100)
+            throw new ExponentOutOfRangeException("Maximum power cannot exceed 100");
+
         curr = head;
         while (curr.next != null) {
             curr = curr.next;
@@ -98,14 +106,27 @@ public class ReferencePolynomial implements Polynomial {
     // Implement more
     @Override
     public Polynomial add(Polynomial p) {
-        Polynomial result = new ReferencePolynomial();
+        ReferencePolynomial result = new ReferencePolynomial();
+        ReferencePolynomial addition = (ReferencePolynomial) p;
+        Node pHead = addition.getHead(), pCurr;
         curr = head;
+        // Loop through this LinkedList
         while (curr.next != null) {
             curr = curr.next;
-            result.setCoefficient(curr.coefficient + p.getCoefficient(curr.power),  curr.power);
+            pCurr = pHead;
+            // Loop through parameter LinkedList
+            while (pCurr.next != null) {
+                pCurr = pCurr.next;
+                if (curr.power == pCurr.power) {
+                    result.setCoefficient(curr.coefficient + p.getCoefficient(curr.power),  curr.power);
+                }
+                else if (pCurr.power > curr.power) {
+                    // TODO: Fix this error
+                    if (result.getCoefficient(pCurr.power) != (curr.coefficient + p.getCoefficient(curr.power)) && result.getCoefficient(pCurr.power) != 0.0)
+                        result.setCoefficient(pCurr.coefficient, pCurr.power);
+                }
+            }
         }
-
-        // Implement
 
         return result;
     }
@@ -114,15 +135,26 @@ public class ReferencePolynomial implements Polynomial {
     @Override
     public Polynomial mult(Polynomial p) throws ExponentOutOfRangeException {
         Polynomial result = new ReferencePolynomial();
+        ReferencePolynomial rp = (ReferencePolynomial) p;
+        Node pHead = rp.getHead(), pCurr;
         curr = head;
+        // Loop through this LinkedList
         while (curr.next != null) {
             curr = curr.next;
+            pCurr = pHead;
+            // Loop through parameter LinkedList
+            while (pCurr.next != null) {
+                pCurr = pCurr.next;
+                result.setCoefficient(curr.coefficient * pCurr.coefficient, curr.power + pCurr.power);
+
+            }
             // Implement
             // Multiply, exponents are added together, coefficients are multiplied
             // result.setCoefficient = multiplication
         }
 
-        // Implement
+        if (result.degree() > 100)
+            throw new ExponentOutOfRangeException("Maximum power cannot exceed 100");
 
         return result;
     }
@@ -153,6 +185,7 @@ public class ReferencePolynomial implements Polynomial {
             else
                 prev = curr;
         }
+
     }
 
     // Implement recursively
