@@ -130,7 +130,7 @@ public class ReferencePolynomial implements Polynomial {
         return result;
     }
 
-    // Implement
+    // Multiplies this polynomial by Polynomial p, returns a Polynomial result without modifying originals
     @Override
     public Polynomial mult(Polynomial p) throws ExponentOutOfRangeException {
         Polynomial result = new ReferencePolynomial();
@@ -147,11 +147,9 @@ public class ReferencePolynomial implements Polynomial {
                 result.setCoefficient(curr.coefficient * pCurr.coefficient, curr.power + pCurr.power);
 
             }
-            // Implement
-            // Multiply, exponents are added together, coefficients are multiplied
-            // result.setCoefficient = multiplication
         }
 
+        // Throw error
         if (result.degree() > 100)
             throw new ExponentOutOfRangeException("Maximum power cannot exceed 100");
 
@@ -163,7 +161,7 @@ public class ReferencePolynomial implements Polynomial {
     public void mult(double scalar) {
         curr = head;
         Node prev = curr;
-        // Loop
+        // Loop through LinkedList
         while (curr.next != null) {
             curr = curr.next;
 
@@ -191,14 +189,17 @@ public class ReferencePolynomial implements Polynomial {
     public double evaluate(double x) {
         double result = 0.0;
 
+        // Loop through LinkedList
         if (ecurr.next != null) {
             ecurr = ecurr.next;
             result = ecurr.coefficient * Math.pow(x, ecurr.power);
             return result + evaluate(x);
         }
-        else
+        else {
+            // Reset head for next usage of function
             ecurr = head;
             return result;
+        }
     }
 
     // Displays polynomial information
